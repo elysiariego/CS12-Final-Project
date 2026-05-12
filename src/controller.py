@@ -483,16 +483,29 @@ class GameController:
     # ---- tower placement / upgrade / selection ----
 
     def _try_place_tower(self) -> None:
-        mx, my = self.input.mouse_pos()
-        if not self._is_legal_tower_spot(mx, my):
+        # Snap to the center of the cell under the cursor so towers always
+        # sit cleanly inside a grid cell — matches the cursor-cell highlight
+        # the View draws and matches the spec ("a tower occupies at least
+        # 1 cell"). Without snapping, towers landed at raw mouse pixels and
+        # the on-screen alignment looked off.
+        cx, cy = self._cursor_cell_center()
+        if not self._is_legal_tower_spot(cx, cy):
             return
         if not self.model.can_afford_tower():
             return
-        tower = self.model.place_tower(mx, my)
+        tower = self.model.place_tower(cx, cy)
         if tower is not None:
             self.sound.place()
             # Auto-select so WASD aims it immediately.
             self._selected_tower = tower
+
+    def _cursor_cell_center(self) -> tuple[float, float]:
+        """Snap the current mouse position to the center of its grid cell."""
+        cs = self.settings["cell_size"]
+        mx, my = self.input.mouse_pos()
+        cell_x = (mx // cs) * cs
+        cell_y = (my // cs) * cs
+        return cell_x + cs / 2, cell_y + cs / 2
 
     def _try_upgrade_tower(self) -> None:
         # Prefer the explicitly-selected tower, else the nearest to cursor.
