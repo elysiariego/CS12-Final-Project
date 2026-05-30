@@ -1,9 +1,9 @@
 {
-  "_comment": "Game configuration. Phase 4 defaults. Edit values to tune.",
+  "_comment": "Game configuration. Edit values to tune.",
   "enemies_per_round": 8,
   "player_lives": 3,
-  "rounds": 4,
-  "num_colors": 4,
+  "rounds": 5,
+  "num_colors": 5,
   "enemy_speed": 0.8,
   "enemy_hp": 1,
   "exp_per_kill": 1,
@@ -13,5 +13,7 @@
   "screen_width": 256,
   "screen_height": 256,
   "cell_size": 16,
-  "fps": 30
+  "fps": 30,
+  "regen_cell_interval": 3,
+  "chameleon_change_frames": 60
 }
