@@ -236,7 +236,7 @@ class GameController:
             pyxel.quit()
         
         if (self.input.wants_back() and
-            self.mode.state not in (GameState.MENU, GameState.LEADERBOARD)
+            self.model.state not in (GameState.MENU, GameState.LEADERBOARD)
             ):
             self.model = GameModel(self.settings)
             self.model.state = GameState.MENU
